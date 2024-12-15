@@ -1,0 +1,1 @@
+docker build -t lyfx0/big_market_front_app:1.0 .
