@@ -13,7 +13,7 @@ FROM base as builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
+RUN chmod +x ./node_modules/.bin/next
 RUN yarn build
 
 FROM base as runner

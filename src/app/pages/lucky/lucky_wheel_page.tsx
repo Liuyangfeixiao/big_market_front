@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 // @ts-ignore
 import {LuckyWheel} from "@lucky-canvas/react";
-import { queryRaffleAwardList,  randomRaffle} from "@/apis";
+import { queryRaffleAwardList,  draw} from "@/apis";
 import { RaffleAwardVO } from "@/types/RaffleAwardVO";
 
 export function LuckyWheelPage() {
@@ -28,9 +28,10 @@ export function LuckyWheelPage() {
     // 查询奖品列表
     const queryRaffleAwardListHandle = async () => {
         const queryParam = new URLSearchParams(window.location.search);
-        const strategyId = Number(queryParam.get("strategyId"));
+        const activityId = Number(queryParam.get("activityId"));
+        const userId = String(queryParam.get('userId'));
 
-        const result = await queryRaffleAwardList(strategyId);
+        const result = await queryRaffleAwardList(userId, activityId);
         const {code, info, data} = await result.json();
         if (code != "0000") {
             window.alert("获取抽奖奖品列表失败 code:" + code + " info:" + info)
@@ -53,12 +54,13 @@ export function LuckyWheelPage() {
     // 调用随机抽奖
     const randomRaffleHandle = async () => {
         const queryParam = new URLSearchParams(window.location.search);
-        const strategyId = Number(queryParam.get("strategyId"));
+        const activityId = Number(queryParam.get("activityId"));
+        const userId = String(queryParam.get('userId'));
 
-        const result = await randomRaffle(strategyId);
+        const result = await draw(userId, activityId);
         const {code, info, data} = await result.json();
         if (code != "0000") {
-            window.alert("获取抽奖奖品列表失败 code:" + code + " info:" + info)
+            window.alert("随机抽奖失败 code:" + code + " info:" + info)
             return;
         }
         // 为了方便测试，mock 的接口直接返回 awardIndex 也就是奖品列表中第几个奖品。
@@ -96,6 +98,9 @@ export function LuckyWheelPage() {
             onEnd={
                 // @ts-ignore
                 prize => {
+                    // 加载数据
+                    queryRaffleAwardListHandle().then(r => {
+                    });
                     alert('恭喜你抽到【' + prize.fonts[0].text + '】, 奖品ID【' + prize.fonts[0].id + '】')
                 }
             }
