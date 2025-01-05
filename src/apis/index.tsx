@@ -17,6 +17,12 @@ export const activityArmory = (activityId: number) => {
     })
 }
 
+/**
+ * 查询奖品列表
+ * @param userId 
+ * @param activityId 
+ * @returns 
+ */
 export const queryRaffleAwardList = (userId: string, activityId?: number) => {
     try {
         return fetch(`${apiHostUrl}/api/v1/raffle/strategy/query_raffle_award_list`, {
@@ -38,6 +44,12 @@ export const queryRaffleAwardList = (userId: string, activityId?: number) => {
     }
 }
 
+/**
+ * 抽奖接口
+ * @param userId 
+ * @param activityId 
+ * @returns 
+ */
 export const draw = (userId: string, activityId?: number) => {
     try {
         return fetch(`${apiHostUrl}/api/v1/raffle/activity/draw`, {
@@ -55,6 +67,90 @@ export const draw = (userId: string, activityId?: number) => {
             "    \"code\": \"0001\",\n" +
             "    \"info\": \"调用失败\",\n" +
             "    \"data\": []\n" +
+            "}");
+    }
+}
+
+/**
+ * 查询账户额度
+ * @param userId 
+ * @param activityId 
+ * @returns 
+ */
+export const queryUserActivityAccount = (userId?: string, activityId?: number) => {
+    try {
+        return fetch(`${apiHostUrl}/api/v1/raffle/activity/query_user_activity_account`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                userId: userId,
+                activityId: activityId
+            })
+        })
+    } catch (error) {
+        return fetch("{\n" +
+            "    \"code\": \"0001\",\n" +
+            "    \"info\": \"调用失败\",\n" +
+            "    \"data\": [\n" +
+            "}");
+    }
+
+}
+
+export const calendarSignRebate = (userId?: string) => {
+    try {
+        return fetch(`${apiHostUrl}/api/v1/raffle/activity/calendar_sign_rebate?userId=${userId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+    } catch (error) {
+        return fetch("{\n" +
+            "    \"code\": \"0001\",\n" +
+            "    \"info\": \"调用失败\",\n" +
+            "    \"data\": [\n" +
+            "}");
+    }
+}
+
+export const isCalendarSignRebate = (userId?: string) => {
+    try {
+        return fetch(`${apiHostUrl}/api/v1/raffle/activity/is_calendar_sign_rebate?userId=${userId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+    } catch (error) {
+        return fetch("{\n" +
+            "    \"code\": \"0001\",\n" +
+            "    \"info\": \"调用失败\",\n" +
+            "    \"data\": [\n" +
+            "}");
+    }
+
+}
+
+export const queryRaffleStrategyRuleWeight = (userId?: string, activityId?: number) => {
+    try {
+        return fetch(`${apiHostUrl}/api/v1/raffle/strategy/query_raffle_strategy_rule_weight`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                userId: userId,
+                activityId: activityId
+            })
+        })
+    } catch (error) {
+        return fetch("{\n" +
+            "    \"code\": \"0001\",\n" +
+            "    \"info\": \"调用失败\",\n" +
+            "    \"data\": [\n" +
             "}");
     }
 }
